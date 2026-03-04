@@ -1,0 +1,90 @@
+Finance Data EDA – Financial Behavior Analysis
+Objective
+
+This project performs exploratory data analysis (EDA) on financial behavior data to identify patterns in customer financial decisions, income levels, credit behavior, and investment preferences.
+
+The goal is to uncover relationships between demographic variables and financial attributes to generate actionable business insights.
+
+Dataset
+
+Source: Kaggle – Finance Data Dataset
+https://www.kaggle.com/datasets/nitindatta/finance-data
+
+The dataset contains demographic and financial attributes such as:
+
+Age
+
+Income
+
+Credit behavior
+
+Investment preferences
+
+Financial product usage
+
+Due to licensing restrictions, the dataset is not included in this repository.
+Please download it directly from Kaggle using the link above.
+
+Tools & Technologies
+Data Analysis
+
+Python
+
+pandas
+
+NumPy
+
+Data Visualization
+
+Matplotlib
+
+Seaborn
+
+Database (if you use SQL again)
+
+MySQL
+
+Aggregations
+
+Window Functions
+
+Segmentation queries
+
+Version Control
+
+Git & GitHub
+
+Analysis Scope
+
+Data cleaning and preprocessing
+
+Demographic distribution analysis
+
+Income and credit pattern exploration
+
+Financial product segmentation
+
+Correlation analysis between income, age, and financial behavior
+
+Risk-related behavioral insights
+
+Key Insights
+
+(To be updated after full analysis)
+
+Income distribution patterns across age groups
+
+Credit usage behavior differences
+
+Investment preference segmentation
+
+Potential financial risk clusters
+
+License
+
+This repository contains only analysis code.
+
+The dataset is publicly available on Kaggle and subject to its original license terms.
+Please refer to the Kaggle dataset page for full licensing information.
+
+The code in this repository is released under the MIT License.
