@@ -5,6 +5,7 @@ This project performs exploratory data analysis (EDA) on financial behavior data
 
 The goal is to uncover relationships between demographic variables and financial attributes to generate actionable business insights.
 
+
 Dataset
 
 Source: Kaggle – Finance Data Dataset
@@ -24,6 +25,7 @@ Financial product usage
 
 Due to licensing restrictions, the dataset is not included in this repository.
 Please download it directly from Kaggle using the link above.
+
 
 Tools & Technologies
 Data Analysis
@@ -54,6 +56,8 @@ Version Control
 
 Git & GitHub
 
+
+
 Analysis Scope
 
 Data cleaning and preprocessing
@@ -68,6 +72,7 @@ Correlation analysis between income, age, and financial behavior
 
 Risk-related behavioral insights
 
+
 Key Insights
 
 (To be updated after full analysis)
@@ -79,6 +84,26 @@ Credit usage behavior differences
 Investment preference segmentation
 
 Potential financial risk clusters
+
+
+Acknowledgements / AI Assistance
+
+This project was developed with the assistance of AI tools.
+
+ChatGPT (OpenAI) was used for:
+
+code debugging and optimization suggestions
+
+reviewing Python and SQL queries
+
+improving data visualization implementation
+
+proofreading and refining sections of the project documentation (README)
+
+All analysis design, interpretation of results, and final implementation decisions were performed by the author.
+
+AI assistance was used strictly as a development aid, similar to consulting documentation or technical forums.
+
 
 License
 
