@@ -35,8 +35,7 @@ query1 = """
 SELECT 
     COUNT(*) as total_questioned,
     COUNT(CASE WHEN gender = 'Male' THEN 1 END) AS total_males,
-    COUNT(CASE WHEN gender = 'Female' THEN 1 END) AS total_females,
-    COUNT(CASE WHEN gender IS NULL THEN 1 END) AS total_missing_gender
+    COUNT(CASE WHEN gender = 'Female' THEN 1 END) AS total_females
 FROM finance_data;
 """
 
@@ -45,15 +44,14 @@ df_query1 = pd.read_sql(query1, engine)
 # Extracting values for the pie chart from the SQL query results
 values = [
     df_query1.loc[0, "total_males"],
-    df_query1.loc[0, "total_females"],
-    df_query1.loc[0, "total_missing_gender"]
+    df_query1.loc[0, "total_females"]
 ]
 
-labels = ["Male", "Female", "Missing"]
+labels = ["Male", "Female"]
 
 plt.figure(figsize=(6,6))
 
-colors = ["#4C72B0", "#C7652B", "#55A868"]
+colors = ["#4C72B0", "#C7652B"]
 
 # Create pie chart
 plt.pie(
@@ -416,3 +414,4 @@ plt.show()
 #============================================================================
 
 engine.dispose() # Dispose of the engine to close all connections and free up resources
+
