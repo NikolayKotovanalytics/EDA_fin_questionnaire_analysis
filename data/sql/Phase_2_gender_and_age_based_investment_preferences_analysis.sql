@@ -1,4 +1,4 @@
--- Step 1: Gender-based investment trends
+-- Step 1: Gender-based investment Interest
 
 -- % of respondents preferring investments and, specifically, investments in stock market
 SELECT 
@@ -95,3 +95,4 @@ SELECT
 FROM finance_data
 WHERE gender = 'Female'
 AND age <= 25;
+
