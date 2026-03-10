@@ -15,28 +15,28 @@ FROM finance_data
 LIMIT 5; -- quick preview to ensure data was loaded correctly
 
 SELECT
-    SUM(gender IS NULL) AS gender_nulls,                                          -- 0
-    SUM(age IS NULL) AS age_nulls,                            -- 0
-    SUM(Mutual_Funds IS NULL) AS mutual_nulls,                          -- 0
-    SUM(Equity_Market IS NULL) AS equity_nulls,                            -- 0
-    SUM(Debentures IS NULL) AS debentures_nulls,                        -- 0
-    SUM(Government_Bonds IS NULL) AS government_bonds_nulls,                                -- 0
-    SUM(Fixed_Deposits IS NULL) AS fixed_deposits_nulls,                                        -- 0
-    SUM(ppf IS NULL) AS ppf_nulls,                              -- 0
-    SUM(gold IS NULL) AS gold_nulls,              -- 0
-    SUM(Factor IS NULL) AS factor_nulls,                      -- 0
-    SUM(Objective IS NULL) AS objective_nulls,                  -- 0
-    SUM(Purpose IS NULL) AS purpose_nulls,    -- 0
-    SUM(Duration IS NULL) AS duration_nulls,               -- 0
-    SUM(Invest_monitor IS NULL) AS invest_monitor_nulls,                              -- 0
-    SUM(Expect IS NULL) AS expect_nulls,              -- 0
-    SUM(Avenue IS NULL) AS avenue_nulls,                      -- 0
-    SUM(`What are your savings objectives?` IS NULL) AS savings_nulls,                  -- 0
-    SUM(Reason_Equity IS NULL) AS reason_equity_nulls,    -- 0
-    SUM(Reason_Mutual IS NULL) AS reason_mutual_nulls,           -- 0
-    SUM(Reason_Bonds IS NULL) AS reason_bonds_nulls,                  -- 0
-    SUM(Reason_FD IS NULL) AS reason_fd_nulls,    -- 0
-    SUM(Source IS NULL) AS source_nulls          -- 0  
+    SUM(gender IS NULL) AS gender_nulls,            
+    SUM(age IS NULL) AS age_nulls,               
+    SUM(Mutual_Funds IS NULL) AS mutual_nulls,                  
+    SUM(Equity_Market IS NULL) AS equity_nulls,                
+    SUM(Debentures IS NULL) AS debentures_nulls,                   
+    SUM(Government_Bonds IS NULL) AS government_bonds_nulls,   
+    SUM(Fixed_Deposits IS NULL) AS fixed_deposits_nulls, 
+    SUM(ppf IS NULL) AS ppf_nulls,     
+    SUM(gold IS NULL) AS gold_nulls,   
+    SUM(Factor IS NULL) AS factor_nulls,         
+    SUM(Objective IS NULL) AS objective_nulls,         
+    SUM(Purpose IS NULL) AS purpose_nulls,   
+    SUM(Duration IS NULL) AS duration_nulls,          
+    SUM(Invest_monitor IS NULL) AS invest_monitor_nulls,     
+    SUM(Expect IS NULL) AS expect_nulls,          
+    SUM(Avenue IS NULL) AS avenue_nulls,              
+    SUM(`What are your savings objectives?` IS NULL) AS savings_nulls,    
+    SUM(Reason_Equity IS NULL) AS reason_equity_nulls,
+    SUM(Reason_Mutual IS NULL) AS reason_mutual_nulls,       
+    SUM(Reason_Bonds IS NULL) AS reason_bonds_nulls,      
+    SUM(Reason_FD IS NULL) AS reason_fd_nulls, 
+    SUM(Source IS NULL) AS source_nulls     
 FROM finance_data;
 -- Note: no missing responses were found in the dataset
 
@@ -71,3 +71,4 @@ SELECT  -- basic age statistics
 FROM finance_data
 
 WHERE age IS NOT NULL; -- ensures average is calculated correctly
+
