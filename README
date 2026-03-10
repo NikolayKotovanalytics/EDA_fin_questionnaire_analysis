@@ -93,7 +93,7 @@ Key Analyses Performed
 - Average respondent age is ~28 y.o 
 
 ## Selected data was plotted as graphs
-Visualizations: `/data/images/`  
+Visualizations: `/data/images/fd_age_distribution` and `/data/images/fd_gender_distribution`   
 Python plotting scripts: `/data/src`
 
 ===============================================================================================================================================================================
@@ -119,7 +119,7 @@ Key Analyses Performed
 - For younger males the lowest investment ranking was unchanged (PPF), while for younger females it changed to Mutual Funds and Equity Market (not PPF)
  
 ## Selected data was plotted as graphs
-Visualizations: `/data/images/`  
+Visualizations: `/data/images/interest_stock_market_investments_gender`  and `/data/images/fd_investment_preferences` and `/data/images/fd_Youngs_investment_preferences`
 Python plotting scripts: `/data/src`
 
 ===============================================================================================================================================================================
@@ -140,10 +140,15 @@ Key Analyses Performed
 - Main purpose of Investmenton: Wealth Creation  - 80% for both gender respondents
 - Expected returns: 20-30%  - 80% for both gender respondents
 - Monthly monitoring of investments - Over 70% for both gender respondents
-- 
+- Reason for investing in Equity Market correlates with main purpose: Capital Appreciation (Wealth Creation)
+- Reason for investing in Mutual Funds varies among genders, 52% Males and 73% Females expects better returns from these comapred to other investment options
+- Majority (56% Males and 66% Females) specify their Retirement plan as their main financial contribution, that is surprising as average repondent is relatively young (28 y.o.)
+- Main factor is return on investments with low risks. In accord witht hese viewes, male respondents choose Gobverment bonds (68%) while female respondents choose Fixed Deposits (60%).
+- Males divided equally - 48% each, between two investment time periods 1-3 years and 3-5 years, while female respondents favors more investment duration period 3-5 years (46%) and 1-3 years  period being second with 40% female respondents.
+- For majority respondents (40%), main information source to make decisions appear to be Financial Consultants
 
 ## Selected data was plotted as graphs
-Visualizations: `/data/images/`  
+Visualizations: `/data/images/top_investments_responses_gender`  
 Python plotting scripts: `/data/src`
 
 ===============================================================================================================================================================================
@@ -151,7 +156,14 @@ Python plotting scripts: `/data/src`
 
 ## EDA Conclusions
 
-The database was investigated for structure, completeness, and missing values.  
-Multiple analytical metrics were applied to analyze revenue trends and customer behavior.  
-Refund patterns, customer reactivation spikes, and card usage were analyzed to identify potential fraud indicators.
+This exploratory analysis examined financial survey responses to understand how demographic characteristics influence investment behavior and financial decision-making.
+
+Respondents of both genders demonstrate strong interest in investing and show similar investment preferences. 
+Investment preferences are relatively similar for males of different age, while for women it differs more with young age.
+With regard to their investment goals, wealth creation is the dominant investment objective for both genders prioritizing a balance between return expectations and risk considerations. 
+Popular response of monthly checking on investments indicates a moderate engagement from the reposindents.
+Surprisingly, a retirement contributions was revealed to be important among all respondents, which age is span between 21 and 35. This, 
+together with monthly engagements and balanced risks indicate an opportunity to engage more customers offering related fincancial products.
+
+Although the dataset is relatively small, the results illustrate how survey data can be used to explore behavioral patterns in personal finance and investment preferences.
 
