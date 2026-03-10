@@ -14,17 +14,39 @@ SELECT *
 FROM finance_data
 LIMIT 5; -- quick preview to ensure data was loaded correctly
 
+SELECT
+    SUM(gender IS NULL) AS gender_nulls,                                          -- 0
+    SUM(age IS NULL) AS age_nulls,                            -- 0
+    SUM(Mutual_Funds IS NULL) AS mutual_nulls,                          -- 0
+    SUM(Equity_Market IS NULL) AS equity_nulls,                            -- 0
+    SUM(Debentures IS NULL) AS debentures_nulls,                        -- 0
+    SUM(Government_Bonds IS NULL) AS government_bonds_nulls,                                -- 0
+    SUM(Fixed_Deposits IS NULL) AS fixed_deposits_nulls,                                        -- 0
+    SUM(ppf IS NULL) AS ppf_nulls,                              -- 0
+    SUM(gold IS NULL) AS gold_nulls,              -- 0
+    SUM(Factor IS NULL) AS factor_nulls,                      -- 0
+    SUM(Objective IS NULL) AS objective_nulls,                  -- 0
+    SUM(Purpose IS NULL) AS purpose_nulls,    -- 0
+    SUM(Duration IS NULL) AS duration_nulls,               -- 0
+    SUM(Invest_monitor IS NULL) AS invest_monitor_nulls,                              -- 0
+    SUM(Expect IS NULL) AS expect_nulls,              -- 0
+    SUM(Avenue IS NULL) AS avenue_nulls,                      -- 0
+    SUM(`What are your savings objectives?` IS NULL) AS savings_nulls,                  -- 0
+    SUM(Reason_Equity IS NULL) AS reason_equity_nulls,    -- 0
+    SUM(Reason_Mutual IS NULL) AS reason_mutual_nulls,           -- 0
+    SUM(Reason_Bonds IS NULL) AS reason_bonds_nulls,                  -- 0
+    SUM(Reason_FD IS NULL) AS reason_fd_nulls,    -- 0
+    SUM(Source IS NULL) AS source_nulls          -- 0  
+FROM finance_data;
+-- Note: no missing responses were found in the dataset
 
 -- STEP 3: Gender distribution (used later for pie chart)
 
 SELECT 
     COUNT(*) AS total_questioned,
     COUNT(CASE WHEN gender = 'Male' THEN 1 END) AS total_males,
-    COUNT(CASE WHEN gender = 'Female' THEN 1 END) AS total_females,
-    COUNT(CASE WHEN gender IS NULL THEN 1 END) AS total_missing_gender
+    COUNT(CASE WHEN gender = 'Female' THEN 1 END) AS total_females
 FROM finance_data;
--- Note: no missing responses were found in the dataset
-
 
 -- STEP 4: Analyse age distribution
 
@@ -47,4 +69,5 @@ SELECT  -- basic age statistics
     COUNT(CASE WHEN age > 30 THEN 1 END) AS total_over30_people
 
 FROM finance_data
+
 WHERE age IS NOT NULL; -- ensures average is calculated correctly
