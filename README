@@ -42,6 +42,7 @@ See `/data/dataset_description.md` for full schema and details.
 
 ### Data Visualization
 - Matplotlib
+- Power BI
 
 ### Development
 - Git
@@ -151,6 +152,29 @@ Key Analyses Performed
 Visualizations: `/data/images/top_investments_responses_gender`  
 Python plotting scripts: `/data/src`
 
+===============================================================================================================================================================================
+===============================================================================================================================================================================
+
+## Dashboard & Data Visualization
+
+An interactive Power BI dashboard was developed to present key insights derived from the EDA.
+
+This dashboard demonstrates how analytical outputs can be translated into decision-support tools for business stakeholders.
+
+### Key Features
+- Most promising investment products 
+- Key Customer Decision factors 
+- Potential advertisement focus 
+
+### Preview
+A static preview is available in: `/data/dashboards/screenshots/`
+- Dashboard with total overview
+- Dashboard focused on responses of a group of participants that are 21-25 years old 
+
+### File
+The full interactive Power BI (.pbix) file is avaliable in: `/data/dashboards/power_bi/`
+
+To explore the dashboard, download and open it in Power BI Desktop.
 ===============================================================================================================================================================================
 ===============================================================================================================================================================================
 
