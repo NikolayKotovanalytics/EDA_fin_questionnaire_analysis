@@ -39,73 +39,6 @@ finance-eda-sales-analysis/
 - `data/images/` - exported charts used in the README and reporting
 - `data/dashboards/` - Power BI dashboard screenshots or files
 
-## How to Run This Project
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/NikolayKotovanalytics/EDA_fin_questionary_analysis.git
-cd finance-eda-sales-analysis
-```
-
-### 2. Create and activate a virtual environment
-
-**Windows**
-```bash
-python -m venv venv
-```
-```bash
-venv\Scripts\activate
-```
-
-### 3. Install project dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Download the dataset
-This project uses the public dataset from Kaggle.
-
-Download it from Kaggle at:
-`https://www.kaggle.com/datasets/nitindatta/finance-data/data`
-
-Raw data is not included in this repository due to licensing constraints.
-
-### 5. Create the MySQL database and import the dataset tables
-```sql
-CREATE DATABASE finance_dataset;
-```
-Then import the dataset tables into that database.
-
-### 6. Configure database credentials
-
-Create a `.env` file in the project root:
-```env
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=financial_transactions_dataset
-DB_USER=your_username
-DB_PASSWORD=your_password
-```
-
-### 7. Run scripts and review outputs
-
-- SQL analysis scripts: `data/sql/`
-
-Recommended order:
-1. `Phase_1_create_dataset_and_preliminary_analysis.sql`
-2. `Phase_2_gender_and_age_based_investment_preferences_analysis.sql`
-3. `Phase_3_analysis_of_factors_influencing_investment_preferences.sql`
- 
-- Python scripts: `data/src/`
-
-After the database is set up, run the Python scripts in data/src/ to generate charts:
-```bash
-python data/src/db_upload_and_plotting_images.py
-```
-- Visualizations: `data/images/`
-- Dashboard screenshots: `data/dashboards/`
-
 ## Dataset Overview
 The dataset contains responses from 40 respondents within 21 - 35 age group about their investment behavior, financial goals, and decision factors.
 
@@ -248,4 +181,75 @@ Surprisingly, a retirement contributions was revealed to be important among all 
 together with monthly engagements and balanced risks indicate an opportunity to engage more customers offering related fincancial products.
 
 Although the dataset is relatively small, the results illustrate how survey data can be used to explore behavioral patterns in personal finance and investment preferences.
+
+===============================================================================================================================================================================
+===============================================================================================================================================================================
+
+## How to Run This Project
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/NikolayKotovanalytics/EDA_fin_questionary_analysis.git
+cd finance-eda-sales-analysis
+```
+
+### 2. Create and activate a virtual environment
+
+**Windows**
+```bash
+python -m venv venv
+```
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install project dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Download the dataset
+This project uses the public dataset from Kaggle.
+
+Download it from Kaggle at:
+`https://www.kaggle.com/datasets/nitindatta/finance-data/data`
+
+Raw data is not included in this repository due to licensing constraints.
+
+### 5. Create the MySQL database and import the dataset tables
+```sql
+CREATE DATABASE finance_dataset;
+```
+Then import the dataset tables into that database.
+
+### 6. Configure database credentials
+
+Create a `.env` file in the project root:
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=financial_transactions_dataset
+DB_USER=your_username
+DB_PASSWORD=your_password
+```
+
+### 7. Run scripts and review outputs
+
+- SQL analysis scripts: `data/sql/`
+
+Recommended order:
+1. `Phase_1_create_dataset_and_preliminary_analysis.sql`
+2. `Phase_2_gender_and_age_based_investment_preferences_analysis.sql`
+3. `Phase_3_analysis_of_factors_influencing_investment_preferences.sql`
+ 
+- Python scripts: `data/src/`
+
+After the database is set up, run the Python scripts in data/src/ to generate charts:
+```bash
+python data/src/db_upload_and_plotting_images.py
+```
+- Visualizations: `data/images/`
+- Dashboard screenshots: `data/dashboards/`
+
 
