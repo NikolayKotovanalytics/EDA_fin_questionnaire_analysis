@@ -1,13 +1,10 @@
-import pandas as pd                    
-from sqlalchemy import create_engine
+import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Step 1: Upload datafrom CSV to MySQL database using SQLAlchemy and pandas
+from db import get_db_engine
 
-# Establish connection to MySQL database using SQLAlchemy
-engine = create_engine(
-    "mysql+pymysql://root:admin@localhost:3306/finance_dataset"
-)
+engine = get_db_engine()
 
 # Load CSV file into pandas DataFrame
 df = pd.read_csv("E:/Kaggle/Finance Data/Finance_data.csv")
