@@ -112,8 +112,8 @@ The dataset contains responses from 40 respondents within 21 - 35 age group abou
 Main entities analyzed include:
 - Sex
 - Age
-- Responses: Yes/No
-- Responses: Choose one answer out of 3 possible options
+- Responses about respondents investment behavior with answers: Yes/No
+- Responses about respondents investment behavior with answers: Choose one answer out of 3 possible options
 
 See `/data/dataset_description.md` for full schema and details.
 
@@ -156,7 +156,6 @@ Key Analyses Performed
 
 ## Selected data was plotted as graphs
 Visualizations: `/data/images/fd_age_distribution` and `/data/images/fd_gender_distribution`   
-Python plotting scripts: `/data/src`
 
 ===============================================================================================================================================================================
 
@@ -182,7 +181,6 @@ Key Analyses Performed
  
 ## Selected data was plotted as graphs
 Visualizations: `/data/images/interest_stock_market_investments_gender`  and `/data/images/fd_investment_preferences` and `/data/images/fd_Youngs_investment_preferences`
-Python plotting scripts: `/data/src`
 
 ===============================================================================================================================================================================
 
@@ -199,9 +197,9 @@ Key Analyses Performed
 
 ### Key Findings
 
-- Main purpose of Investmenton: Wealth Creation  - 80% for both gender respondents
-- Expected returns: 20-30%  - 80% for both gender respondents
-- Monthly monitoring of investments - Over 70% for both gender respondents
+- Main purpose of Investmenton: Wealth Creation  - for 80% of all respondents
+- Expected returns: 20-30%  - for 80% of all respondents
+- Monthly monitoring of investments - for over 70% of allr respondents
 - Reason for investing in Equity Market correlates with main purpose: Capital Appreciation (Wealth Creation)
 - Reason for investing in Mutual Funds varies among genders, 52% Males and 73% Females expects better returns from these comapred to other investment options
 - Majority (56% Males and 66% Females) specify their Retirement plan as their main financial contribution, that is surprising as average repondent is relatively young (28 y.o.)
@@ -211,7 +209,6 @@ Key Analyses Performed
 
 ## Selected data was plotted as graphs
 Visualizations: `/data/images/top_investments_responses_gender`  
-Python plotting scripts: `/data/src`
 
 ===============================================================================================================================================================================
 ===============================================================================================================================================================================
