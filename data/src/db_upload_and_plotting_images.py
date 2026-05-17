@@ -3,15 +3,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import math
 
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_PATH = PROJECT_ROOT / "data" / "raw" / "Finance_data.csv"
+IMAGE_DIR = PROJECT_ROOT / "data" / "images"
+IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+
 from db import get_db_engine
 
 engine = get_db_engine()
 
 # Load CSV file into pandas DataFrame
-#df = pd.read_csv("Original_data.csv")
-df = pd.read_csv("E:\\Kaggle\\Finance Data\\Original_data.csv")
+df = pd.read_csv("Original_data.csv")
 
-# Rename colomns
+# Rename columns
 df = df.rename(columns={'AGE':'Age','GENDER':'Gender',
        'Do you invest in Investment Avenues?':'Investment_Avenues',
        'What do you think are the best options for investing your money? (Rank in order of preference) [Mutual Funds]': 'Mutual_Funds',
@@ -45,11 +51,11 @@ ax = df['Gender'].value_counts() \
     startangle=90,
     counterclock=False) 
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_gender_distribution.png") 
-#plt.savefig("C:/.../fd_gender_distribution.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_gender_distribution.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
 
 
 # Age distribution - pie chart
@@ -71,11 +77,12 @@ for text in ax.texts:
         text.set_color('white')
 
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_age_distribution.png") 
-#plt.savefig("C:/.../fd_age_distribution.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_age_distribution.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
+
 
 
 # Respondents' interest in Investment Avenues - pie chart
@@ -91,11 +98,12 @@ ax = df_ia.plot(kind='pie',
     startangle=65) 
 
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_investment_avenues.png") 
-#plt.savefig("C:/.../fd_investment_avenues.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_investment_avenues.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
+
 
 
 # Respondents' interest in Stock Market - pie chart
@@ -114,11 +122,11 @@ ax = df_sm.plot(kind='pie',
 
 
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_stock_market.png") 
-#plt.savefig("C:/.../fd_stock_market.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_stock_market.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
 
 
 # Average ranking of Investment avenues - bar plot
@@ -138,11 +146,11 @@ ax.set_xlabel('Average Score (Lower is More Preferred)')
 ax.set_ylabel('Investment Type')
 
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_investment_avenues_ranking.png") 
-#plt.savefig("C:/.../fd_investment_avenues_ranking.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_investment_avenues_ranking.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
 
 
 # Average ranking of Investment avenues by respondents under 25 y.o. - bar plot
@@ -164,11 +172,11 @@ ax.set_xlabel('Average Score (Lower is More Preferred)')
 ax.set_ylabel('Investment Type')
 
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_investment_avenues_ranking_under_25.png") 
-#plt.savefig("C:/.../fd_investment_avenues_ranking_under_25.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_investment_avenues_ranking_under_25.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
 
 
 # Most common answers given by Respondents separated by Gender and their respective occurence percentage ratio - bar plot
@@ -242,11 +250,12 @@ for i, label in enumerate(df_responses['Answer_Label']):
         fontsize=7
     )
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_most_common_answers.png") 
-#plt.savefig("C:/.../fd_most_common_answers.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_most_common_answers.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()
+
 
 
 # Most common answers given by Young Respondents under 25 y.o. separated by Gender and their respective occurence percentage ratio - bar plot
@@ -323,8 +332,8 @@ for i, label in enumerate(df_responses['Answer_Label']):
         fontsize=7
     )
 plt.tight_layout()
-plt.show()
 
 # Saving the plot as .png image
-plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_most_common_answers_under_25.png") 
-#plt.savefig("C:/.../fd_most_common_answers_under_25.png") #Note: an example of saving the plot as .png image
+plt.savefig(IMAGE_DIR / "fd_most_common_ranking_under_25.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+
+plt.show()

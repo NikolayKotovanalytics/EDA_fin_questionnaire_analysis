@@ -110,7 +110,7 @@ prep_source AS (
 
 
  -- Main Query which filters uses CTEs results to show only 1 TOP option chosen by most respondents
- -- and provides percantage of respondents voted out of total per gender
+ -- and provides percentage of respondents voted out of total per gender
 
 
 SELECT 

@@ -1,4 +1,4 @@
-# Finance Investment Questionary EDA 
+# Finance Investment Questionnaire EDA 
 
 ## Project Summary
 
@@ -156,7 +156,7 @@ This visualization summarizes the most common investment-related responses by ge
 
 ## Repository Structure
 ```text
-EDA_fin_questionary_analysis/
+EDA_fin_questionnaire_analysis/
 ├── README.md
 ├── requirements.txt
 ├── .env.example
@@ -187,8 +187,8 @@ EDA_fin_questionary_analysis/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/NikolayKotovanalytics/EDA_fin_questionary_analysis.git
-cd EDA_fin_questionary_analysis
+git clone https://github.com/NikolayKotovanalytics/EDA_fin_questionnaire_analysis.git
+cd EDA_fin_questionnaire_analysis
 ```
 
 ### 2. Create and activate a virtual environment
