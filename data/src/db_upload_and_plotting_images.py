@@ -1,414 +1,330 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import math
 
 from db import get_db_engine
 
 engine = get_db_engine()
 
 # Load CSV file into pandas DataFrame
-df = pd.read_csv("E:/Kaggle/Finance Data/Finance_data.csv")
+#df = pd.read_csv("Original_data.csv")
+df = pd.read_csv("E:\\Kaggle\\Finance Data\\Original_data.csv")
 
-# Upload DataFrame to MySQL table
+# Rename colomns
+df = df.rename(columns={'AGE':'Age','GENDER':'Gender',
+       'Do you invest in Investment Avenues?':'Investment_Avenues',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Mutual Funds]': 'Mutual_Funds',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Equity Market]': 'Equity_Market',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Debentures]': 'Debentures',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Government Bonds]': 'Government_Bonds',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Fixed Deposits]': 'Fixed_Deposits',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Public Provident Fund]': 'Public_Provident_Fund',
+       'What do you think are the best options for investing your money? (Rank in order of preference) [Gold]': 'Gold',
+       'Do you invest in Stock Market?': 'Stock_Market',
+       'What are the factors considered by you while investing in any instrument?': 'Investment_Factors',
+       'What is your investment objective?': 'Investment_Objective',
+       'What is your purpose behind investment?': 'Investment_Purpose',
+       'How long do you prefer to keep your money in any investment instrument?': 'Investment_Horizon',
+       'How often do you monitor your investment?': 'Monitoring_Frequency',
+       'How much return do you expect from any investment instrument?': 'Expected_Return',
+       'Which investment avenue do you mostly invest in?': 'Preferred_Investment_Avenue',
+       'What are your savings objectives?': 'Savings_Objectives',
+       'Reasons for investing in Equity Market': 'Reasons_for_Equity_Market',
+       'Reasons for investing in Mutual Funds': 'Reasons_for_Mutual_Funds',
+       'Reasons for investing in Government Bonds': 'Reasons_for_Government_Bonds',
+       'Reasons for investing in Fixed Deposits ': 'Reasons_for_Fixed_Deposits ',
+       'Your sources of information for investments is ': 'Sources_of_Information'})
 
-df.to_sql("finance_data", engine, if_exists="replace", index=False)
 
-# Quick sanity check to ensure data loaded correctly
-
-print(df.shape)   # number of rows and columns
-print(df.head())  # preview first 5 rows
-
-query = "SELECT * FROM finance_data LIMIT 5;"  # Check 5 rows from the MySQL table
-df_query = pd.read_sql(query, engine)
-
-print(df_query)
-
-#============================================================================
-
-# Plot 1: Gender distribution of survey participants using SQL and Matplotlib
-
-# SQL query calculating gender counts and percentages
-query1 = """
-SELECT 
-    COUNT(*) as total_questioned,
-    COUNT(CASE WHEN gender = 'Male' THEN 1 END) AS total_males,
-    COUNT(CASE WHEN gender = 'Female' THEN 1 END) AS total_females
-FROM finance_data;
-"""
-
-df_query1 = pd.read_sql(query1, engine) 
-
-# Extracting values for the pie chart from the SQL query results
-values = [
-    df_query1.loc[0, "total_males"],
-    df_query1.loc[0, "total_females"]
-]
-
-labels = ["Male", "Female"]
-
-plt.figure(figsize=(6,6))
-
-colors = ["#4C72B0", "#C7652B"]
-
-# Create pie chart
-plt.pie(
-    values,
-    labels=labels,
-    autopct="%1.1f%%", # shows percentage on pie charts with one decimal place
+# Gender distribution - pie chart
+ax = df['Gender'].value_counts() \
+.plot(kind='pie',
+    title='Gender Distribution of Survey Participants',
+    autopct='%1.1f%%',
     startangle=90,
-    colors=colors
-)
+    counterclock=False) 
+plt.tight_layout()
+plt.show()
 
-plt.title("Gender Distribution of Survey Participants")
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_gender_distribution.png") 
+#plt.savefig("C:/.../fd_gender_distribution.png") #Note: an example of saving the plot as .png image
+
+
+# Age distribution - pie chart
+ax = df['Age'].value_counts() \
+.sort_index() \
+.plot(
+    kind='pie',
+    title='Age Distribution of Survey Participants',
+    autopct='%1.1f%%',
+    pctdistance=0.87,
+    startangle=90,
+    counterclock=False) 
+
+# Adjust percentage texts inside sectors of the pie chart
+for text in ax.texts:
+    if '%' in text.get_text():
+        text.set_fontsize(7)
+        text.set_fontstyle('italic')
+        text.set_color('white')
 
 plt.tight_layout()
-#plt.savefig("C:\\...\\images\\fd_gender_distribution.png", dpi=300) Example of picture saving path, adjust if needed
 plt.show()
 
-#============================================================================
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_age_distribution.png") 
+#plt.savefig("C:/.../fd_age_distribution.png") #Note: an example of saving the plot as .png image
 
 
-# Plot 2: Age distribution of survey participants using SQL and Matplotlib
+# Respondents' interest in Investment Avenues - pie chart
+df_ia = df.groupby('Investment_Avenues')[['Gender']].value_counts()
+ax = df_ia.plot(kind='pie',
+    title='Respondents responses to opportunities in Investment Avenues',
+    autopct='%1.1f%%',
+    pctdistance=0.7,
 
-# SQL query calculating gender counts and percentages
+        # Custom colors
+    colors=["#ff9ca2", "#609d4d", "#8fe079"],
 
-query2 = """
-SELECT 
-    COUNT(CASE WHEN age BETWEEN 21 AND 25 THEN 1 END) AS total_young_people,
-    COUNT(CASE WHEN age BETWEEN 26 AND 30 THEN 1 END) AS total_middleaged_people,
-    COUNT(CASE WHEN age > 30 THEN 1 END) AS total_over30_people
-FROM finance_data
-WHERE age IS NOT NULL;
-"""
-
-df_query2 = pd.read_sql(query2, engine) 
-
-# Extracting values for the pie chart from the SQL query results
-values = [
-    df_query2.loc[0, "total_young_people"], # retieves the value of row 0 and the targeted column 
-    df_query2.loc[0, "total_middleaged_people"],
-    df_query2.loc[0, "total_over30_people"]
-]
-
-labels = ["21-25", "26-30", "31+"]
-
-plt.figure(figsize=(6,6))
-
-colors = ["#72D167", "#F4B248", "#AA449F"]
-
-# Plotting the pie chart with specified colors, labels, and percentage display
-plt.pie(
-    values,
-    labels=labels,
-    autopct="%1.1f%%", # Display percentage on pie charts with one decimal place
-    startangle=-150,
-    colors=colors,
-    counterclock=False
-)
-
-plt.title("Age Distribution of Survey Participants")
+    startangle=65) 
 
 plt.tight_layout()
-#plt.savefig("C:\\...\\images\\fd_age_distribution.png", dpi=300) Example of picture saving path, adjust if needed
 plt.show()
 
-#============================================================================
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_investment_avenues.png") 
+#plt.savefig("C:/.../fd_investment_avenues.png") #Note: an example of saving the plot as .png image
 
-# Plot 3: Investment preferences avergaed among survey participants and divided by gender using SQL and Matplotlib
 
-# SQL query calculating gender counts, percentages, and average preference ranks for each investment type
+# Respondents' interest in Stock Market - pie chart
+df_sm = df.groupby('Stock_Market')[['Gender']].value_counts()
 
-query3 = """
-SELECT 
-    COUNT(*) AS respondents,
-    100 * COUNT(CASE WHEN Investment_Avenues = 'Yes' THEN 1 END) / COUNT(*) AS investment_interest_pct,
-    AVG(Mutual_Funds) AS average_mutual_funds_preference_rank,
-    AVG(Equity_Market) AS average_equity_market_preference_rank,
-    AVG(Debentures) AS average_debentures_preference_rank,
-    AVG(Government_Bonds) AS average_goverment_bonds_preference_rank,
-    AVG(Fixed_Deposits) AS average_fixed_deposits_preference_rank,
-    AVG(ppf) AS average_ppf_preference_rank,
-    AVG(gold) AS average_gold_preference_rank
-FROM finance_data
-WHERE gender = 'Male'
-UNION -- Used to combine Gender-based datasets in one table for easier comparison
-SELECT 
-    COUNT(*) AS respondents,
-    100 * COUNT(CASE WHEN Investment_Avenues = 'Yes' THEN 1 END) / COUNT(*) AS investment_interest_pct,
-    AVG(Mutual_Funds) AS average_mutual_funds_preference_rank,
-    AVG(Equity_Market) AS average_equity_market_preference_rank,
-    AVG(Debentures) AS average_debentures_preference_rank,
-    AVG(Government_Bonds) AS average_goverment_bonds_preference_rank,
-    AVG(Fixed_Deposits) AS average_fixed_deposits_preference_rank,
-    AVG(ppf) AS average_ppf_preference_rank,
-    AVG(gold) AS average_gold_preference_rank
-FROM finance_data
-WHERE gender = 'Female';
-"""
+ax = df_sm.plot(kind='pie',
+    title='Respondents responses to opportunities in Stock Market',
+    autopct='%1.1f%%',
+    pctdistance=0.7,
 
-# Extracting values for the block chart from the SQL query results
+    # Custom colors
+    colors=["#ff9ca2", "#f14b7d", "#609d4d", "#8fe079"],
 
-df3 = pd.read_sql(query3, engine)
+    startangle=45) 
 
-# Ensure all values are numeric
-df3 = df3.apply(pd.to_numeric)
 
-categories = [
-    "Mutual Funds",
-    "Equity Market",
-    "Debentures",
-    "Gov Bonds",
-    "Fixed Deposits",
-    "PPF",
-    "Gold"
-]
 
-x = range(len(categories))
-width = 0.3
-
-plt.figure(figsize=(10,6))
-
-plt.bar([i - width/2 for i in x], df3.iloc[0, 2:], width, label="Male")     # skips first 2 coloumns (respondents and investment_interest_pct) and plot only preference ranks
-plt.bar([i + width/2 for i in x], df3.iloc[1, 2:], width, label="Female")   # skips first 2 coloumns (respondents and investment_interest_pct) and plot only preference ranks
-
-plt.xticks(x, categories, rotation=15)
-
-plt.title("Average Investment Preference Rank by Gender")
-plt.ylabel("Average Rank")
-plt.xlabel("Investment Type")
-
-plt.legend()
 plt.tight_layout()
-#plt.savefig("C:\\...\\images\\fd_investment_preferences.png", dpi=300) Example of picture saving path, adjust if needed
 plt.show()
 
-#============================================================================
-
-# Plot 4: Investment preferences averaged among survey participants which are <= 25 y.o. divided by gender using SQL and Matplotlib
-
-# SQL query calculating average preference ranks for each investment type
-query4 = """
-SELECT 
-    AVG(Mutual_Funds) AS average_mutual_funds_preference_rank,
-    AVG(Equity_Market) AS average_equity_market_preference_rank,
-    AVG(Debentures) AS average_debentures_preference_rank,
-    AVG(Government_Bonds) AS average_goverment_bonds_preference_rank,
-    AVG(Fixed_Deposits) AS average_fixed_deposits_preference_rank,
-    AVG(ppf) AS average_ppf_preference_rank,
-    AVG(gold) AS average_gold_preference_rank
-FROM finance_data
-WHERE gender = 'Male' AND age <= 25
-UNION -- Used to combine Gender-based datasets in one table for easier comparison
-SELECT 
-    AVG(Mutual_Funds) AS average_mutual_funds_preference_rank,
-    AVG(Equity_Market) AS average_equity_market_preference_rank,
-    AVG(Debentures) AS average_debentures_preference_rank,
-    AVG(Government_Bonds) AS average_goverment_bonds_preference_rank,
-    AVG(Fixed_Deposits) AS average_fixed_deposits_preference_rank,
-    AVG(ppf) AS average_ppf_preference_rank,
-    AVG(gold) AS average_gold_preference_rank
-FROM finance_data
-WHERE gender = 'Female' AND age <= 25;
-"""
-
-# Extracting values for the histogram chart from the SQL query results
-df4 = pd.read_sql(query4, engine)
-
-# Ensure all values are numeric
-df4 = df4.apply(pd.to_numeric)
-
-categories = [
-    "Mutual Funds",
-    "Equity Market",
-    "Debentures",
-    "Gov Bonds",
-    "Fixed Deposits",
-    "PPF",
-    "Gold"
-]
-
-x = range(len(categories))
-width = 0.3
-
-plt.figure(figsize=(10,6))
-
-plt.bar([i - width/2 for i in x], df4.iloc[0], width, label="Young Males")
-plt.bar([i + width/2 for i in x], df4.iloc[1], width, label="Young Females")
-
-plt.xticks(x, categories, rotation=15)
-
-plt.title("Average Investment Preference Rank by Gender (Age ≤ 25)")
-plt.ylabel("Average Rank")
-plt.xlabel("Investment Type")
-
-plt.legend()
-plt.tight_layout()
-
-#plt.savefig("C:\\...\\images\\fd_Youngs_investment_preferences.png", dpi=300) Example of picture saving path, adjust if needed
-plt.show()
-
-#============================================================================
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_stock_market.png") 
+#plt.savefig("C:/.../fd_stock_market.png") #Note: an example of saving the plot as .png image
 
 
-# Plot 5: Interest in Stock Market Investments according to survey participants divided by gender using SQL and Matplotlib
+# Average ranking of Investment avenues - bar plot
 
-# SQL Query to calculate percent of respondents who prefer stock market investments divided by gender
+cols = ['Mutual_Funds', 'Equity_Market',
+        'Debentures', 'Government_Bonds', 'Fixed_Deposits',
+        'Public_Provident_Fund', 'Gold']
 
-query5 = """
-SELECT -- Calculates percent of respondents who prefer stock market investments for each gender
-    gender,
-    ROUND(100 * COUNT(CASE WHEN Stock_Marktet = 'Yes' THEN 1 END) / COUNT(*), 2) AS Stock_Market_Investment_Preference_Pct
-FROM finance_data
-GROUP BY gender;
-"""
+grouped = df.groupby('Gender')[cols].mean()
 
-# Extracting values for the histogram chart from the SQL query results
-
-df5= pd.read_sql(query5, engine)
-
-# Ensure all values are numeric
-
-bars = plt.bar(
-    df5["gender"],
-    df5["Stock_Market_Investment_Preference_Pct"],
-    color=["#C7652B", "#4C72B0"])
-
-# Add value labels on top of bars
-
-for bar in bars:
-    height = bar.get_height()
-    plt.text(
-        bar.get_x() + bar.get_width()/2,  # center of bar
-        height,                           # height of bar
-        f"{height:.2f}%",                 # value displayed
-        ha='center',
-        va='bottom'
-    )
-
-plt.title("Interest in Stock Market Investments by Gender")
-plt.ylabel("Interested Participants Percentage")
-plt.xlabel("Gender")
-
-#plt.savefig("C:\\...\\images\\interest_stock_market_investments_gender.png", dpi=300) Example of picture saving path, adjust if needed
-plt.show()
-
-#============================================================================
-
-
-# Plot 6: Analysis of factors which have the most influence on investment preferences per gender
-# Note: I decided to use pandas instead of SQL here for more concise and clear code
-
-# SQL Query to convert all data in the table into a DataFrame for further analysis
-df6 = pd.read_sql("SELECT * FROM finance_data", engine)
-
-# Clean column names
-df6.columns = df6.columns.str.strip().str.replace(" ", "_")
-
-# Precompute gender totals
-male_total = (df6["gender"] == "Male").sum()
-female_total = (df6["gender"] == "Female").sum()
-
-# Function to calculate top responses for each question and their percentages by gender
-def calculate_top_response(df6, column, label):
-
-    grouped = df6.groupby(column)["gender"].value_counts().unstack(fill_value=0) # value_counts() counts the frequency of each unique value in the selected column ("gender") within each group created by the groupby operation.
-                                                                                 # unstack(fill_value=0) transforms the resulting Series into a DataFrame by moving the innermost index level (the unique values from "gender") to columns. This creates a pivot table where rows are the group keys (from the groupby column), columns are the unique "gender" values, and cells contain the counts. fill_value=0 replaces any missing combinations (e.g., if a group has no "female") with 0 instead of NaN.
-    # Calculate percentages per vote for each gender
-    grouped["males_selection_pct"] = 100 * grouped.get("Male", 0) / male_total        # get(X,0) retrieves the value for the specified key, returning 0 if the key is not found
-    grouped["females_selection_pct"] = 100 * grouped.get("Female", 0) / female_total  # get(X,0) retrieves the value for the specified key, returning 0 if the key is not found
-
-    grouped = grouped[["males_selection_pct", "females_selection_pct"]]
-
-    max_male = grouped["males_selection_pct"].max()
-    max_female = grouped["females_selection_pct"].max()
-
-# Select the response(s) with the highest percentage for each
-    top = grouped[
-        (grouped["males_selection_pct"] == max_male) |
-        (grouped["females_selection_pct"] == max_female)
-    ]
-
-    top = top.round(1).reset_index() #round(1) rounds all numeric values in the DataFrame to 1 decimal place
-                                     # reset_index() converts the current index (which contains the groupby column values) into a regular column and replaces it with a default integer index starting from 0. This makes the DataFrame easier to work with for plotting or further operations.
-
-    top["Respondent_responses"] = label + top[column]
-
-    return top[["Respondent_responses", "males_selection_pct", "females_selection_pct"]] # Return only the columns needed for plotting. Multiple colomns which is why dataframe used instead of series
-
-
-columns = {
-    "Factor": "Main factor: ",
-    "Objective": "Goal: ",
-    "Purpose": "Purpose: ",
-    "Duration": "Duration: ",
-    "Invest_Monitor": "Regular monitoring: ",
-    "Expect": "Expected returns: ",
-    "Avenue": "Investments via: ",
-    "What_are_your_savings_objectives?": "Main financial contribution: ",
-    "Reason_Equity": "Reason Equity: ",
-    "Reason_Mutual": "Reason Mutual: ",
-    "Reason_Bonds": "Reason Bonds: ",
-    "Reason_FD": "Reason FD: ",
-    "Source": "Information Source: "
-}
-
-results = pd.concat(
-    [calculate_top_response(df6, col, label) for col, label in columns.items()]     # combines the returned DataFrames of the above function for each column into a single DataFrame for easier plotting
+ax = grouped.T.plot(
+    kind='barh',
+    title='Investment Avenues Average Ranking'
 )
 
-# Plot bar chart comparing top responses for each question by gender with % of respective respondents
-plt.figure(figsize=(13,6))
+ax.set_xlabel('Average Score (Lower is More Preferred)')
+ax.set_ylabel('Investment Type')
 
-results.set_index("Respondent_responses").plot(         # used results for plotting
-    kind="bar",
-    color=["#F4B248", "steelblue"],
-    ax=plt.gca()
+plt.tight_layout()
+plt.show()
+
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_investment_avenues_ranking.png") 
+#plt.savefig("C:/.../fd_investment_avenues_ranking.png") #Note: an example of saving the plot as .png image
+
+
+# Average ranking of Investment avenues by respondents under 25 y.o. - bar plot
+
+cols = ['Mutual_Funds', 'Equity_Market',
+        'Debentures', 'Government_Bonds', 'Fixed_Deposits',
+        'Public_Provident_Fund', 'Gold']
+
+# Filter the DataFrame to include only respondents under 25 years old
+df_under_25 = df[df['Age'] <= 25]
+
+grouped = df_under_25.groupby('Gender')[cols].mean()
+ax = grouped.T.plot(
+    kind='barh',
+    title='Investment Avenues Average Ranking by Respondents <= 25 y.o.'
 )
 
-plt.title("Top Investment Responses by Gender")
-plt.ylabel("Respondent Selection Percentage")
-plt.xlabel("Survey Question")
-plt.xticks(rotation=15, ha="right")
+ax.set_xlabel('Average Score (Lower is More Preferred)')
+ax.set_ylabel('Investment Type')
 
-plt.legend(["Male", "Female"])
+plt.tight_layout()
+plt.show()
 
-# Plot labels above the highest bar for each question
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_investment_avenues_ranking_under_25.png") 
+#plt.savefig("C:/.../fd_investment_avenues_ranking_under_25.png") #Note: an example of saving the plot as .png image
 
-ax = plt.gca()  # Get current axes to add value labels on top of bars
-                # plt.gca() (get current axes) returns the current Axes object from the active figure in matplotlib. 
-                # This allows to modify the plot (e.g., add labels, annotations, or adjust properties) without explicitly creating or storing an axes reference earlier.
 
-male_bars = ax.containers[0]
-female_bars = ax.containers[1]
+# Most common answers given by Respondents separated by Gender and their respective occurence percentage ratio - bar plot
 
-for i, (male_bar, female_bar) in enumerate(zip(male_bars, female_bars)): # iterate through bars to find the largest one and label it
+results = []
 
-    male_val = male_bar.get_height()        # get value of the bar
-    female_val = female_bar.get_height()
+for column in df.columns[11:]:
+    row = {'Column': column}
 
-    # Label only the highest bar
-    if male_val >= female_val:
-        bar = male_bar
-        value = male_val
+    for gender in ['Male', 'Female']:
+        df_gender = df[df['Gender'] == gender]
+
+        vc = df_gender[column].value_counts()
+
+        most_common = vc.idxmax()
+        pct = math.ceil(100 * vc.max() / len(df_gender))
+
+        row[f'{gender}_Answer'] = most_common
+        row[f'{gender}_Ratio'] = pct
+
+    results.append(row)
+
+df_responses = pd.DataFrame(results).set_index('Column')
+
+# labels
+
+def make_label(row):
+    if row['Male_Answer'] == row['Female_Answer']:
+        return row['Male_Answer']
     else:
-        bar = female_bar
-        value = female_val
+        return f"M: {row['Male_Answer']} | F: {row['Female_Answer']}"
 
+df_responses['Answer_Label'] = df_responses.apply(make_label, axis=1)
+
+# Plot
+
+# import MultipleLocator for better control over y-axis ticks  
+from matplotlib.ticker import MultipleLocator
+
+
+plot_df = df_responses[['Male_Ratio', 'Female_Ratio']].rename(
+    columns={
+        'Male_Ratio': 'Men',
+        'Female_Ratio': 'Women'
+    }
+)
+
+ax = plot_df.plot(
+    kind='barh',
+    title='Most Common Answers by Gender',
+    figsize=(14, 6)
+)
+
+ax.set_xlabel('Ratio (%)')
+ax.set_ylabel('Questions')
+
+# Grid only on x-axis
+ax.xaxis.set_major_locator(MultipleLocator(20))
+ax.xaxis.set_minor_locator(MultipleLocator(10))
+
+ax.grid(which='major', linestyle='--', linewidth=0.6)
+ax.grid(which='minor', linestyle=':', linewidth=0.3, alpha=0.5)
+
+# Add x-axis labels for better readability
+for i, label in enumerate(df_responses['Answer_Label']):
     ax.text(
-        bar.get_x() + bar.get_width()/2, # x position (center of the bar) and width of the bar
-        value + 0.5,                     # y position slightly above the bar (value + 0.5) to avoid overlap
-        f"{value:.1f}%",                 # value label with one decimal place and percentage sign
-        ha="center",
-        va="bottom",
-        fontsize=9
+        plot_df.iloc[i].max() + 1,  # x-position (right of bar)
+        i,                           # y-position
+        label,
+        va='center',
+        fontsize=7
     )
-
 plt.tight_layout()
-
-#plt.savefig("C:\\...\\images\\top_investments_responses_gender.png", dpi=300) Example of picture saving path, adjust if needed
 plt.show()
 
-#============================================================================
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_most_common_answers.png") 
+#plt.savefig("C:/.../fd_most_common_answers.png") #Note: an example of saving the plot as .png image
 
-engine.dispose() # Dispose of the engine to close all connections and free up resources
 
+# Most common answers given by Young Respondents under 25 y.o. separated by Gender and their respective occurence percentage ratio - bar plot
+
+results = []
+
+# Filter the DataFrame to include only respondents under 25 years old
+df_under_25 = df[df['Age'] <= 25]
+
+for column in df_under_25.columns[11:]:
+    row = {'Column': column}
+
+    for gender in ['Male', 'Female']:
+        df_gender = df_under_25[df_under_25['Gender'] == gender]
+
+        vc = df_gender[column].value_counts()
+
+        most_common = vc.idxmax()
+        pct = math.ceil(100 * vc.max() / len(df_gender))
+
+        row[f'{gender}_Answer'] = most_common
+        row[f'{gender}_Ratio'] = pct
+
+    results.append(row)
+
+df_responses = pd.DataFrame(results).set_index('Column')
+
+# labels
+
+def make_label(row):
+    if row['Male_Answer'] == row['Female_Answer']:
+        return row['Male_Answer']
+    else:
+        return f"M: {row['Male_Answer']} | F: {row['Female_Answer']}"
+
+df_responses['Answer_Label'] = df_responses.apply(make_label, axis=1)
+
+# Plot
+
+# import MultipleLocator for better control over y-axis ticks  
+from matplotlib.ticker import MultipleLocator
+
+
+plot_df = df_responses[['Male_Ratio', 'Female_Ratio']].rename(
+    columns={
+        'Male_Ratio': 'Men',
+        'Female_Ratio': 'Women'
+    }
+)
+
+ax = plot_df.plot(
+    kind='barh',
+    title='Most Common Answers of respondents <= 25 y.o. by Gender',
+    figsize=(14, 6)
+)
+
+ax.set_xlabel('Ratio (%)')
+ax.set_ylabel('Questions')
+
+# Grid only on x-axis
+ax.xaxis.set_major_locator(MultipleLocator(20))
+ax.xaxis.set_minor_locator(MultipleLocator(10))
+
+ax.grid(which='major', linestyle='--', linewidth=0.6)
+ax.grid(which='minor', linestyle=':', linewidth=0.3, alpha=0.5)
+
+# Add x-axis labels for better readability
+for i, label in enumerate(df_responses['Answer_Label']):
+    ax.text(
+        plot_df.iloc[i].max() + 1,  # x-position (right of bar)
+        i,                           # y-position
+        label,
+        va='center',
+        fontsize=7
+    )
+plt.tight_layout()
+plt.show()
+
+# Saving the plot as .png image
+plt.savefig("E:\\Python_Learn\\EDA GitHub\\EDA_fin_questionary_analysis\\data\\images\\fd_most_common_answers_under_25.png") 
+#plt.savefig("C:/.../fd_most_common_answers_under_25.png") #Note: an example of saving the plot as .png image

@@ -1,3 +1,5 @@
+-- Phase 3 - Gender-based questions about investment analysis
+
 -- Step 1: Analysis of factors influencing investment preferences
 
 -- CTEs which calculate percentage of male/female respondents per option for a given question

@@ -1,10 +1,11 @@
+-- Phase 1 - Data Understanding and Preparation
+
 -- STEP 1: Create dataset and upload data
 
 CREATE DATABASE finance_dataset;
 
 USE finance_dataset;
 -- NOTE: Data was uploaded from CSV using Python (pandas)
-
 
 -- STEP 2: Overview data
 

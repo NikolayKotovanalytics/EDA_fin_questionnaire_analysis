@@ -1,61 +1,34 @@
 # Finance Investment Questionary EDA 
 
-## Objective
-This project performs Exploratory Data Analysis (EDA) on a financial questionnaire dataset to understand how gender and age factors influence investment preferences and financial decision-making.
+## Project Summary
+This project analyzes a financial questionnaire dataset to understand how gender and age factors influence investment preferences and financial decision-making.
 
 The analysis focuses on identifying patterns in investment choices, financial goals, and decision factors among survey respondents.
 
-## Key Questions
-- Respondents gender distribution?
-- Which age groups are present?
+## Business Questions
 - Which are the most appealing investment options divided by gender among total and young (<= 25 y.o.) respondents?
-- What is a general interest in stock market investments?
-- Which factors are the most important for respondents and which information sources were used the most?
+- How many respondents are interested in Stock MArket and Investment Avenues?
+- Which are most popular factors for investments among respondents?
 
-## Tools Used
-MySQL, Python, pandas, matplotlib, seaborn, SQLAlchemy, Power BI
+## Key Findings & Insights
 
-## Project Deliverables
-- SQL analysis scripts
-- Python visualization scripts and exported charts
-- Dashboard screenshots / Power BI reporting
+### Key Findings
 
-## Repository Structure
-```text
-finance-eda-sales-analysis/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── data/
-│   ├── sql/
-│   ├── src/
-│   ├── images/
-│   └── dashboards/
-```
+- Total respondents: 40, among which Male - 25 and Female - 15.
+- Total respondents' age range: 21 - 35.
+- Majority of respondents are interested in investments in Stock Markets and other Investment Avenues
+- Among investment avenues repondents of both genders indicated highlighted interest in investment in Mutual Fund and Public provident Fund, while younger respondents (below 25 y.o.) also outlined interest in investment in Equity Market
+- Among investment avenues repondents of both genders indicated highlighted interest in investment in Mutual Fund and Public provident Fund, while younger respondents (below 25 y.o.) value most investment options equally.
 
-### Folder Details
-- `data/sql/` - SQL scripts used for transformations and analysis
-- `data/src/` - Python scripts for database extraction and plotting
-- `data/images/` - exported charts used in the README and reporting
-- `data/dashboards/` - Power BI dashboard screenshots or files
+### Key Insights
 
-## Dataset Overview
-The dataset contains responses from 40 respondents within 21 - 35 age group about their investment behavior, financial goals, and decision factors.
+| Analysis Area | Key Insight | Business Relevance |
+|---|---|---|
 
-Main entities analyzed include:
-- Sex
-- Age
-- Responses about respondents investment behavior with answers: Yes/No
-- Responses about respondents investment behavior with answers: Choose one answer out of 3 possible options
 
-See `/data/dataset_description.md` for full schema and details.
+## Business Impact
 
-## Acknowledgements / AI Assistance
-This project was developed with the assistance of AI tools: ChatGPT (OpenAI).
-
-AI was used for code review, debugging, and documentation refinement. All analysis design, interpretation of results, and final implementation decisions were performed by the author.
-
-## Business Value
+## Business Recommendations
 
 This analysis demonstrates how survey responses can be used to:
 
@@ -65,125 +38,89 @@ This analysis demonstrates how survey responses can be used to:
 - Analyse customers financial behavior and their key decision factors, like expected returns, investment duration, etc.
 - Select marketing strategy optimization using information sources / advisory services
 
-Note: The dataset contains a small sample of respondents and therefore the results should be interpreted as exploratory insights rather than statistically representative conclusions.
+## Limitations
+- The analysis is based on the available synthetic dataset and may not reflect missing external business context
+- The dataset contains a small sample of respondents and therefore the results should be interpreted as exploratory insights rather than statistically representative conclusions.
 
-===============================================================================================================================================================================
-===============================================================================================================================================================================
+## Tools Used
+- MySQL
+- Python
+- pandas
+- matplotlib
+- seaborn
+- SQLAlchemy
+- Power BI
 
-## Phase 1 – Data Upload and Gender and Age group analysis
+## Project Deliverables
+- SQL analysis scripts
+- Python visualization scripts and exported charts
+- Dashboard screenshots / Power BI reporting
 
-## Objective
-Investigate dataset structure, detect missing data, identify different gender and age group of respondents.
+## Methodology
 
-**Dataset:** Kaggle – Financial data Dataset  
+### Phase 1 - Data Understanding and Preparation
+**Goal:** Understand the dataset structure and prepare the data for analysis in MySQL.  
+**Tasks completed:**
+- validated table structure and column definitions
+- reviewed key fields and relationships
+- checked nulls and general data consistency
+- collected overall dataset statistics, including:
+  - total respondents gender and age distribution
+  - total amount of questions
+- cleaned and standardized the data for further analysis
 
-Key Analyses Performed
- - Gender
- - Age
+### Phase 2 - Gender- and age-based investment avenues analysis
+**Goal:** Analyze how an average respondent answers the questionary about investment avenues options.  
+**Techniques used:**
+- aggregations and conditional aggregations
+- date transformations and grouping
 
-### Key Findings
-- total 40 respondents: 25 males and 15 females
-- No missing data, because no NULL were found
-- Respondent age distribution: 21-35 years.
-- Average respondent age is ~28 y.o 
-
-## Selected data was plotted as graphs
-Visualizations: `/data/images/fd_age_distribution` and `/data/images/fd_gender_distribution`   
-
-===============================================================================================================================================================================
-
-##  Phase 2 – Gender- and age-based investment behavior analysis (EDA)
-
-## Objective
-Analyze respondents ranking of investment opportunities.
-
-**Dataset:** Kaggle – Financial data Dataset  
-
-Key Analyses Performed
-- Investment interest
-- Ranked Invested preferences responses
-
-### Key Findings
-
-- 80% Female and 100% Male respondents showed interest in investment opportunities, with above 70% and 90% being interested in specifically the Stock Market investments
-- Both gender respondents ranked Debentures and Gold investment opportunities as the highest with Debentures being the highest rank among male and Gold among female respondents.
-- Both gender respondents ranked PPF investment opportunity the lowest 
-- Among younger age group of respondents (<= 25 y.o.) Interest in investment remained 100% among male group but dropped to 50% among female group. 
-- Younger males and females kept the Debentures and Gold as their top-ranked investment opportunities
-- For younger males the lowest investment ranking was unchanged (PPF), while for younger females it changed to Mutual Funds and Equity Market (not PPF)
- 
-## Selected data was plotted as graphs
-Visualizations: `/data/images/interest_stock_market_investments_gender`  and `/data/images/fd_investment_preferences` and `/data/images/fd_Youngs_investment_preferences`
-
-===============================================================================================================================================================================
-
-## Phase 3 — Customer Investment Investment Decision Factors
-
-## Objective
-Analyze respondent responses about factors influencing their investment behavior.
-
-**Dataset:** Kaggle – Transactions Fraud Dataset  
-
-Key Analyses Performed
-- Factors influencing the respondents investment behavior
-- Information sources
-
-### Key Findings
-
-- Main purpose of Investmenton: Wealth Creation  - for 80% of all respondents
-- Expected returns: 20-30%  - for 80% of all respondents
-- Monthly monitoring of investments - for over 70% of allr respondents
-- Reason for investing in Equity Market correlates with main purpose: Capital Appreciation (Wealth Creation)
-- Reason for investing in Mutual Funds varies among genders, 52% Males and 73% Females expects better returns from these comapred to other investment options
-- Majority (56% Males and 66% Females) specify their Retirement plan as their main financial contribution, that is surprising as average repondent is relatively young (28 y.o.)
-- Main factor is return on investments with low risks. In accord witht hese viewes, male respondents choose Gobverment bonds (68%) while female respondents choose Fixed Deposits (60%).
-- Males divided equally - 48% each, between two investment time periods 1-3 years and 3-5 years, while female respondents favors more investment duration period 3-5 years (46%) and 1-3 years  period being second with 40% female respondents.
-- For majority respondents (40%), main information source to make decisions appear to be Financial Consultants
-
-## Selected data was plotted as graphs
-Visualizations: `/data/images/top_investments_responses_gender`  
-
-===============================================================================================================================================================================
-===============================================================================================================================================================================
+### Phase 3 -  Gender-based questions about investment analysis
+**Goal:** Analyze how an average respondent answers the questionary.  
+**Techniques used:**
+- aggregations and conditional aggregations
+- date transformations and grouping
 
 ## Dashboard & Data Visualization
+An interactive Power BI dashboard was developed to present key financial metrics, revenue trends, refund behavior, and customer activity insights.
 
-An interactive Power BI dashboard was developed to present key insights derived from the EDA.
+### Dashboard Preview
 
-This dashboard demonstrates how analytical outputs can be translated into decision-support tools for business stakeholders.
+This dashboard summarizes questionnary metrics and insights for business users.
 
-### Key Features
-- Most promising investment products 
-- Key Customer Decision factors 
-- Potential advertisement focus 
+![Dashboard Preview](data/dashboards/screenshots/fd_investing_factors_dashboard.png)
 
-### Preview
-A static preview is available in: `/data/dashboards/screenshots/`
-- Dashboard with total overview
-- Dashboard focused on responses of a group of participants that are 21-25 years old 
+### Interactive File
+The Power BI `.pbix` file is available in
+`/data/dashboards/power_bi/fd_investing_factors_dashboard.pbix`
 
-### File
-The full interactive Power BI (.pbix) file is avaliable in: `/data/dashboards/power_bi/`
+*To explore the dashboard, download and open it in Power BI Desktop.*
 
-To explore the dashboard, download and open it in Power BI Desktop.
-===============================================================================================================================================================================
-===============================================================================================================================================================================
+### Data Visualization Preview
 
-## EDA Conclusions
 
-This exploratory analysis examined financial survey responses to understand how demographic characteristics influence investment behavior and financial decision-making.
+## Repository Structure
+```text
+EDA_fin_questionary_analysis/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── data/
+│   ├── sql/
+│   ├── src/
+│   ├── notebooks/
+│   ├── images/
+│   └── dashboards/
+│        └── power_bi/
+│        └── screenshots/
+```
 
-Respondents of both genders demonstrate strong interest in investing and show similar investment preferences. 
-Investment preferences are relatively similar for males of different age, while for women it differs more with young age.
-With regard to their investment goals, wealth creation is the dominant investment objective for both genders prioritizing a balance between return expectations and risk considerations. 
-Popular response of monthly checking on investments indicates a moderate engagement from the reposindents.
-Surprisingly, a retirement contributions was revealed to be important among all respondents, which age is span between 21 and 35. This, 
-together with monthly engagements and balanced risks indicate an opportunity to engage more customers offering related fincancial products.
-
-Although the dataset is relatively small, the results illustrate how survey data can be used to explore behavioral patterns in personal finance and investment preferences.
-
-===============================================================================================================================================================================
-===============================================================================================================================================================================
+### Folder Details
+- `data/sql/` - SQL scripts used for transformations and analysis
+- `data/src/` - Python scripts for database extraction and plotting
+- `data/notebooks/` - Jupiter notebooks with Python scripts for database investigations and plotting
+- `data/images/` - exported charts used in the README and reporting
+- `data/dashboards/` - Power BI dashboard screenshots or files
 
 ## How to Run This Project
 
@@ -191,7 +128,7 @@ Although the dataset is relatively small, the results illustrate how survey data
 
 ```bash
 git clone https://github.com/NikolayKotovanalytics/EDA_fin_questionary_analysis.git
-cd finance-eda-sales-analysis
+cd EDA_fin_questionary_analysis
 ```
 
 ### 2. Create and activate a virtual environment
@@ -199,25 +136,33 @@ cd finance-eda-sales-analysis
 **Windows**
 ```bash
 python -m venv venv
-```
-```bash
 venv\Scripts\activate
 ```
 
+**macOS / Linux**
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
 ### 3. Install project dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Download the dataset
-This project uses the public dataset from Kaggle.
 
-Download it from Kaggle at:
-`https://www.kaggle.com/datasets/nitindatta/finance-data/data`
+This project uses the public **Finance Data Dataset** from Kaggle.
 
-Raw data is not included in this repository due to licensing constraints.
+Download it from Kaggle at: [Finance Data Dataset](https://www.kaggle.com/datasets/nitindatta/finance-data/data)
+
+Raw data is not included in this repository due to size and licensing constraints.
+
+See `/data/dataset_description.md` for full dataset schema and details.
 
 ### 5. Create the MySQL database and import the dataset tables
+
 ```sql
 CREATE DATABASE finance_dataset;
 ```
@@ -226,13 +171,16 @@ Then import the dataset tables into that database.
 ### 6. Configure database credentials
 
 Create a `.env` file in the project root:
+
 ```env
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=financial_transactions_dataset
+DB_NAME=finance_dataset
 DB_USER=your_username
 DB_PASSWORD=your_password
 ```
+
+See the `.env.example` file for an example of its content.
 
 ### 7. Run scripts and review outputs
 
@@ -243,13 +191,12 @@ Recommended order:
 2. `Phase_2_gender_and_age_based_investment_preferences_analysis.sql`
 3. `Phase_3_analysis_of_factors_influencing_investment_preferences.sql`
  
-- Python scripts: `data/src/`
+After the database is set up, run the Python scripts in `data/src/` to generate charts:
 
-After the database is set up, run the Python scripts in data/src/ to generate charts:
 ```bash
-python data/src/db_upload_and_plotting_images.py
+python db_upload_and_plotting_images.py
 ```
-- Visualizations: `data/images/`
-- Dashboard screenshots: `data/dashboards/`
+- Visualizations: `data/images/` 
 
-
+## Acknowledgements / AI Assistance
+AI tools such as ChatGPT (OpenAI) were used for code review, debugging, and documentation refinement. All analysis design, interpretation of results, and final implementation decisions were performed by the author.
