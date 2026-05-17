@@ -2,13 +2,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import math
-
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATA_PATH = PROJECT_ROOT / "data" / "raw" / "Finance_data.csv"
-IMAGE_DIR = PROJECT_ROOT / "data" / "images"
+from db import get_db_engine
+
+# Output folder
+IMAGE_DIR = Path("data/images")
 IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+
+engine = get_db_engine()
+
 
 from db import get_db_engine
 
@@ -53,9 +56,13 @@ ax = df['Gender'].value_counts() \
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_gender_distribution.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "gender_distribution.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
+
 
 
 # Age distribution - pie chart
@@ -79,9 +86,13 @@ for text in ax.texts:
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_age_distribution.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "age_distribution.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
+
 
 
 
@@ -100,10 +111,12 @@ ax = df_ia.plot(kind='pie',
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_investment_avenues.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "investment_avenues.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
-
 
 
 # Respondents' interest in Stock Market - pie chart
@@ -124,9 +137,13 @@ ax = df_sm.plot(kind='pie',
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_stock_market.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "stock_market.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
+
 
 
 # Average ranking of Investment avenues - bar plot
@@ -148,7 +165,10 @@ ax.set_ylabel('Investment Type')
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_investment_avenues_ranking.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "investment_avenues_ranking.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
 
@@ -174,7 +194,10 @@ ax.set_ylabel('Investment Type')
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_investment_avenues_ranking_under_25.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "investment_avenues_ranking_under_25.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
 
@@ -252,7 +275,10 @@ for i, label in enumerate(df_responses['Answer_Label']):
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_most_common_answers.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "most_common_answers.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
 
@@ -334,6 +360,9 @@ for i, label in enumerate(df_responses['Answer_Label']):
 plt.tight_layout()
 
 # Saving the plot as .png image
-plt.savefig(IMAGE_DIR / "fd_most_common_ranking_under_25.png", dpi=300, bbox_inches="tight") #Note: an example of saving the plot as .png image
+output_path = IMAGE_DIR / "most_common_answers_under_25.png"
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+
+print(f"Plot saved to: {output_path}")
 
 plt.show()
