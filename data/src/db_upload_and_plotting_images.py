@@ -17,6 +17,23 @@ from db import get_db_engine
 
 engine = get_db_engine()
 
+"""
+Purpose:
+Visualize the distribution of responses to the financial questionnaire survey,
+including age and gender distributions, investment preferences divided by age and gender groups.
+
+Outputs:
+- Pie chart saved to data/images/gender_distribution.png
+- Pie chart saved to data/images/age_distribution.png
+- Pie chart saved to data/images/investment_avenues_distribution.png
+- Pie chart saved to data/images/stock_market_distribution.png
+- Bar plot saved to data/images/investment_avenues_ranking.png
+- Bar plot saved to data/images/investment_avenues_ranking_under_25.png
+- Bar plot saved to data/images/most_common_answers.png
+- Bar plot saved to data/images/most_common_answers_under_25.png
+"""
+
+
 # Load CSV file into pandas DataFrame
 df = pd.read_csv("Original_data.csv")
 
@@ -45,8 +62,9 @@ df = df.rename(columns={'AGE':'Age','GENDER':'Gender',
        'Reasons for investing in Fixed Deposits ': 'Reasons_for_Fixed_Deposits ',
        'Your sources of information for investments is ': 'Sources_of_Information'})
 
+#---------------------------------------------------------------------------------------------------------
+# Image 1. Gender distribution - pie chart
 
-# Gender distribution - pie chart
 ax = df['Gender'].value_counts() \
 .plot(kind='pie',
     title='Gender Distribution of Survey Participants',
@@ -64,8 +82,9 @@ print(f"Plot saved to: {output_path}")
 plt.show()
 
 
+#---------------------------------------------------------------------------------------------------------
+# Image 2. Age distribution - pie chart
 
-# Age distribution - pie chart
 ax = df['Age'].value_counts() \
 .sort_index() \
 .plot(
@@ -95,8 +114,9 @@ plt.show()
 
 
 
+#---------------------------------------------------------------------------------------------------------
+# Image 3. Respondents' interest in Investment Avenues - pie chart
 
-# Respondents' interest in Investment Avenues - pie chart
 df_ia = df.groupby('Investment_Avenues')[['Gender']].value_counts()
 ax = df_ia.plot(kind='pie',
     title='Respondents responses to opportunities in Investment Avenues',
@@ -119,7 +139,9 @@ print(f"Plot saved to: {output_path}")
 plt.show()
 
 
-# Respondents' interest in Stock Market - pie chart
+#---------------------------------------------------------------------------------------------------------
+# Image 4. Respondents' interest in Stock Market - pie chart
+
 df_sm = df.groupby('Stock_Market')[['Gender']].value_counts()
 
 ax = df_sm.plot(kind='pie',
@@ -146,13 +168,15 @@ plt.show()
 
 
 
-# Average ranking of Investment avenues - bar plot
+#---------------------------------------------------------------------------------------------------------
+# Image 5. Average ranking of Investment avenues - bar plot
 
 cols = ['Mutual_Funds', 'Equity_Market',
         'Debentures', 'Government_Bonds', 'Fixed_Deposits',
         'Public_Provident_Fund', 'Gold']
 
 grouped = df.groupby('Gender')[cols].mean()
+grouped = grouped.reindex(['Male', 'Female'])
 
 ax = grouped.T.plot(
     kind='barh',
@@ -173,7 +197,9 @@ print(f"Plot saved to: {output_path}")
 plt.show()
 
 
-# Average ranking of Investment avenues by respondents under 25 y.o. - bar plot
+
+#---------------------------------------------------------------------------------------------------------
+# Image 6. Average ranking of Investment avenues by respondents under 25 y.o. - bar plot
 
 cols = ['Mutual_Funds', 'Equity_Market',
         'Debentures', 'Government_Bonds', 'Fixed_Deposits',
@@ -183,6 +209,8 @@ cols = ['Mutual_Funds', 'Equity_Market',
 df_under_25 = df[df['Age'] <= 25]
 
 grouped = df_under_25.groupby('Gender')[cols].mean()
+grouped = grouped.reindex(['Male', 'Female']) 
+
 ax = grouped.T.plot(
     kind='barh',
     title='Investment Avenues Average Ranking by Respondents <= 25 y.o.'
@@ -202,7 +230,8 @@ print(f"Plot saved to: {output_path}")
 plt.show()
 
 
-# Most common answers given by Respondents separated by Gender and their respective occurence percentage ratio - bar plot
+#---------------------------------------------------------------------------------------------------------
+# Image 7. Most common answers given by Respondents separated by Gender and their respective occurence percentage ratio - bar plot
 
 results = []
 
@@ -242,8 +271,8 @@ from matplotlib.ticker import MultipleLocator
 
 plot_df = df_responses[['Male_Ratio', 'Female_Ratio']].rename(
     columns={
-        'Male_Ratio': 'Men',
-        'Female_Ratio': 'Women'
+        'Male_Ratio': 'Male',
+        'Female_Ratio': 'Female'
     }
 )
 
@@ -284,7 +313,8 @@ plt.show()
 
 
 
-# Most common answers given by Young Respondents under 25 y.o. separated by Gender and their respective occurence percentage ratio - bar plot
+#---------------------------------------------------------------------------------------------------------
+# Image 8. Most common answers given by Young Respondents under 25 y.o. separated by Gender and their respective occurence percentage ratio - bar plot
 
 results = []
 
@@ -327,8 +357,8 @@ from matplotlib.ticker import MultipleLocator
 
 plot_df = df_responses[['Male_Ratio', 'Female_Ratio']].rename(
     columns={
-        'Male_Ratio': 'Men',
-        'Female_Ratio': 'Women'
+        'Male_Ratio': 'Male',
+        'Female_Ratio': 'Female'
     }
 )
 
